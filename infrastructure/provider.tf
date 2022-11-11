@@ -9,8 +9,8 @@ provider "azurerm" {
 
 terraform {
   backend "azurerm" {
-    resource_group_name  = "terraform-state-rg"
-    storage_account_name = "mfgtfstatestrdev"
+    resource_group_name  = "sre-rg"
+    storage_account_name = "jmtfstatestr "
     container_name       = "apim-sh-gateway"
     key                  = "apim-sh-gateway.tfstate"
   }
