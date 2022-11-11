@@ -8,6 +8,15 @@ provider "azurerm" {
 }
 
 terraform {
+  backend "azurerm" {
+    resource_group_name  = "terraform-state-rg"
+    storage_account_name = "mfgtfstatestrdev"
+    container_name       = "apim-sh-gateway"
+    key                  = "apim-sh-gateway.tfstate"
+  }
+}
+
+terraform {
   required_version = ">= 0.12"
 }
 

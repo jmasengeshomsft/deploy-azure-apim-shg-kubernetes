@@ -16,8 +16,8 @@ module "apim_gateway" {
 
 resource "azurerm_api_management_product" "Conference_product" {
   product_id            = "ConfrenceAPI"
-  api_management_name = data.azurerm_api_management.apim_instance.name
-  resource_group_name = data.azurerm_api_management.apim_instance.resource_group_name
+  api_management_name   = data.azurerm_api_management.apim_instance.name
+  resource_group_name   = data.azurerm_api_management.apim_instance.resource_group_name
   display_name          = "Confrence API"
   description           = "Confrence API"
   subscription_required = true
