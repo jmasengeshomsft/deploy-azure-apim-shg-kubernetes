@@ -1,0 +1,6 @@
+apim_rg                  = "sre-rg"
+apim_name                = "apim-dev-jm"
+apim_gateway_name        = "jm-gateway2-canadaeast"
+apim_gateway_description = "jm-gateway2-canadaeast"
+apim_gateway_region      = "alicloud-kubernetes-cluster"
+kv_name                  = "kv-jm-sre-lbuc"

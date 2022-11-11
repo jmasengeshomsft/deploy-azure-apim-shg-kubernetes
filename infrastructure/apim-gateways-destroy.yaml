@@ -1,0 +1,74 @@
+trigger: none
+
+variables:
+   - name: RUN_FLAG_TERRAFORM
+     value: 'Any branch'
+   - name: tf_working_dir
+     value: '$(System.DefaultWorkingDirectory)/landing-zone-vnet'
+   - name: NugetSecurityAnalysisWarningLevel
+     value: None
+   - name: state_container
+     value: 'landing-zone-state'
+   - group: jm-fy23-landing-zone
+
+stages:
+
+## FOR DEV ##
+- template: ../templates/terraform-stages-template-destroy.yml
+  parameters:
+    environment: dev
+    environmentDisplayName: Dev
+    stageVariableGroup: jm-fy23-landing-zone
+    # TerraformArguments: >-
+    #   -var application=noneho
+    # Terraform recognizes TF_VAR prefixed environment variables
+    TerraformEnvVariables:
+      TF_VAR_app_name_prefix: $(app_name_prefix)
+      TF_VAR_default_location: $(default_location) 
+      TF_VAR_sre_rg: $(sre_rg)
+      TF_VAR_sre_vnet_name: $(sre_vnet_name) 
+      TF_VAR_networking_resource_group_name : $(networking_resource_group_name)
+      # TF_VAR_spoke_networking_resource_group_name : $(spoke_networking_resource_group_name)
+      TF_VAR_spoke_virtual_network_name : $(spoke_virtual_network_name)
+      # TF_VAR_management_resource_group_name : $(management_resource_group_name)
+      TF_VAR_hub_vnet_name : $(hub_vnet_name)
+      TF_VAR_spoke_vnet_name : $(spoke_vnet_name)
+
+
+# # # FOR PROD ##  
+# ## FOR DEV ##
+# - template: ../templates/terraform-stages-template-destroy.yml
+#   parameters:
+#     environment: dr
+#     environmentDisplayName: Dr
+#     stageVariableGroup: leanovated-dr-spoke
+#     # TerraformArguments: >-
+#     #   -var application=noneho
+#     # Terraform recognizes TF_VAR prefixed environment variables
+#     TerraformEnvVariables:
+#       TF_VAR_app_name_prefix: $(app_name_prefix)
+#       TF_VAR_default_location: $(default_location) 
+#       TF_VAR_networking_resource_group_name : $(networking_resource_group_name)
+#       TF_VAR_spoke_networking_resource_group_name : $(spoke_networking_resource_group_name)
+#       TF_VAR_spoke_virtual_network_name : $(spoke_virtual_network_name)
+#       TF_VAR_management_resource_group_name : $(management_resource_group_name)
+#       TF_VAR_hub_virtual_network_name : $(hub_virtual_network_name)
+#       TF_VAR_aks_subnet_name : $(aks_subnet_name)
+#       TF_VAR_aks_cluster_name: $(aks_cluster_name)
+#       TF_VAR_default_pool_max_pods : $(default_pool_max_pods)
+#       TF_VAR_default_vm_size : $(default_vm_size)
+#       TF_VAR_default_node_count : $(default_node_count)
+#       TF_VAR_workload_pool_max_pods : $(workload_pool_max_pods)
+#       TF_VAR_workload_vm_size : $(workload_vm_size)
+#       TF_VAR_workload_node_count : $(workload_node_count)
+#       TF_VAR_workspace_name  : $(workspace_name)
+#       TF_VAR_aad_tenant_id : $(aad_tenant_id)
+#       TF_VAR_azure_aad_admin_group_id : $(azure_aad_admin_group_id)
+#       TF_VAR_workspace_resource_group_name : $(workspace_resource_group_name)
+#       TF_VAR_cluster_resource_group_name: $(cluster_resource_group_name)
+#       TF_VAR_acr_name : $(acr_name) 
+#       TF_VAR_csi_key_vault_name: $(csi_key_vault_name)
+#       TF_VAR_tls_key_vault_name : $(tls_key_vault_name)
+#       TF_VAR_tls_key_vault_resource_group : $(tls_key_vault_resource_group)
+#       TF_VAR_file_share_storage_name : $(file_share_storage_name)
+
