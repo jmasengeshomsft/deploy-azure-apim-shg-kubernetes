@@ -95,11 +95,18 @@ jobs:
         id: install-kubectl
         uses: azure/setup-kubectl@v3
 
+      - uses: azure/k8s-create-secret@v2
+        with:
+          namespace: 'conference-gw'
+          secret-type: 'generic'
+          secret-name: 'jm-gateway2-canadaeast-token'
+          data: ${{ secrets.AZURE_APIM_GETWAY_TOKEN }}
+
       - name: Deploys application
         uses: Azure/k8s-deploy@v4
         with:
           action: deploy
-          namespace: conference-gw
+          namespace: 'conference-gw'
           # private-cluster: true
           # manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
           manifests: |
