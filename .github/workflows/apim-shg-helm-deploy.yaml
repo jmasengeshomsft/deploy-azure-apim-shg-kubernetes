@@ -99,6 +99,7 @@ jobs:
         uses: Azure/k8s-deploy@v4
         with:
           action: deploy
+          namespace: conference-gw
           # private-cluster: true
           //manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
           manifests: |
