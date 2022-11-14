@@ -40,28 +40,28 @@ env:
   DEPLOYMENT_MANIFEST_PATH: "./kubernetes/gateway"
 
 jobs:
-  buildImage:
-    permissions:
-      contents: read
-      id-token: write
-    runs-on: ubuntu-latest
-    steps:
-      # Checks out the repository this file is in
-      - uses: actions/checkout@v3
+  # buildImage:
+  #   permissions:
+  #     contents: read
+  #     id-token: write
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # Checks out the repository this file is in
+  #     - uses: actions/checkout@v3
 
-      # Logs in with your Azure credentials
-      - name: Azure login
-        uses: azure/login@v1.4.6
-        with:
-          creds: '${{ secrets.AZURE_CREDENTIALS }}'
-          # client-id: ${{ secrets.AZURE_OIDC_CLIENT_ID }}
-          # tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          # subscription-id: ${{ secrets.AZURE_SUB_ID }}
+  #     # Logs in with your Azure credentials
+  #     - name: Azure login
+  #       uses: azure/login@v1.4.6
+  #       with:
+  #         creds: '${{ secrets.AZURE_CREDENTIALS }}'
+  #         # client-id: ${{ secrets.AZURE_OIDC_CLIENT_ID }}
+  #         # tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+  #         # subscription-id: ${{ secrets.AZURE_SUB_ID }}
 
-      # # Builds and pushes an image up to your Azure Container Registry
-      # - name: Build and push image to ACR
-      #   run: |
-      #     az acr build --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.RESOURCE_GROUP }} .
+  #     # # Builds and pushes an image up to your Azure Container Registry
+  #     # - name: Build and push image to ACR
+  #     #   run: |
+  #     #     az acr build --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.RESOURCE_GROUP }} .
 
   deploy:
     permissions:
@@ -91,6 +91,9 @@ jobs:
           cluster-name: ${{ env.CLUSTER_NAME }}
 
       # Deploys application based on given manifest file
+      - name: Setup kubectl
+        id: install-kubectl
+        uses: azure/setup-kubectl@v3
       - name: Deploys application
         uses: Azure/k8s-deploy@v4
         with:
