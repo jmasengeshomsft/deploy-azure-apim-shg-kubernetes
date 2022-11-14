@@ -99,7 +99,7 @@ jobs:
         with:
           namespace: 'conference-gw'
           secret-type: 'Opaque'
-          secret-name: 'jm-gateway2-canadaeast-token'
+          secret-name: 'jm-gateway-token'
           data: ${{ secrets.AZURE_APIM_GETWAY_TOKEN }}
 
       - name: Deploys application
