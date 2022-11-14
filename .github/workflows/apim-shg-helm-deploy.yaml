@@ -35,8 +35,8 @@ on: workflow_dispatch
 env:
   AZURE_CONTAINER_REGISTRY: "your-azure-container-registry"
   CONTAINER_NAME: "your-container-name"
-  RESOURCE_GROUP: "jm-dev-aks-rg"
-  CLUSTER_NAME: "jm-dev-cluster"
+  RESOURCE_GROUP: "leanovated-sre-rg"
+  CLUSTER_NAME: "last-aks-demo-bye"
   DEPLOYMENT_MANIFEST_PATH: "./kubernetes/gateway"
 
 jobs:
