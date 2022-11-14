@@ -75,7 +75,7 @@ data "azurerm_key_vault" "certs_kv" {
 }
 
 data "azurerm_key_vault_certificate" "gw_cert" {
-  name         = "apim-gw-jmasengeshoservices-com"
+  name         = "conference-gw-jmasengeshoservices-com"
   key_vault_id = data.azurerm_key_vault.certs_kv.id
 }
 
