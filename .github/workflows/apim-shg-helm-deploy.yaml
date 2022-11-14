@@ -98,7 +98,7 @@ jobs:
       - uses: azure/k8s-create-secret@v2
         with:
           namespace: 'conference-gw'
-          secret-type: 'generic'
+          secret-type: 'Opaque'
           secret-name: 'jm-gateway2-canadaeast-token'
           data: ${{ secrets.AZURE_APIM_GETWAY_TOKEN }}
 
