@@ -8,7 +8,7 @@ metadata:
   labels:
     app: jm-gateway2-canadaeast
 data:
-  config.service.endpoint: "apim-dev-jm.configuration.azure-api.net"
+  config.service.endpoint: "apim-jmapim-dev-canadacentral-001.configuration.azure-api.net"
   neighborhood.host: "jm-gateway2-canadaeast-instance-discovery"
   runtime.deployment.artifact.source: "Azure Portal"
   runtime.deployment.mechanism: "YAML"
@@ -73,7 +73,7 @@ spec:
         - name: config.service.auth
           valueFrom:
             secretKeyRef:
-              name: jm-gateway2-canadaeast-token
+              name: jm-gateway-token
               key: value
         envFrom:
         - configMapRef:
