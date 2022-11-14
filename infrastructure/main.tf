@@ -79,6 +79,15 @@ data "azurerm_key_vault_certificate" "gw_cert" {
   key_vault_id = data.azurerm_key_vault.certs_kv.id
 }
 
+resource "azurerm_api_management_certificate" "conference-api" {
+  name                = "conference-gw-jmasengeshoservices-com"
+  api_management_name = data.azurerm_api_management.apim_instance.name
+  resource_group_name = data.azurerm_api_management.apim_instance.resource_group_name
+
+  key_vault_secret_id = data.azurerm_key_vault_certificate.gw_cert.secret_id
+}
+
+
 
 
 
