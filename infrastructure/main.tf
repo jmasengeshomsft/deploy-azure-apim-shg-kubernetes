@@ -71,7 +71,7 @@ resource "azurerm_api_management_gateway_api" "conference_api" {
 #certifcate
 data "azurerm_key_vault" "certs_kv" {
   name                = var.kv_name
-  resource_group_name = var.apim_rg
+  resource_group_name = var.kv_rg
 }
 
 data "azurerm_key_vault_certificate" "gw_cert" {

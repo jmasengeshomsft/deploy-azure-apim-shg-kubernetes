@@ -30,3 +30,8 @@ variable "kv_name" {
   description = "The name of the Key Vault"
   type        = string
 }
+
+variable "kv_rg" {
+  description = "The name of the Key Vault rg"
+  type        = string
+}
