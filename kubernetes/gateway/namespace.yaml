@@ -6,17 +6,17 @@ metadata:
   name: conference-gw
 
 
-    {
-    "clientId": "fa3fdce3-8f91-42eb-9bef-0f31fcaaa3db",
-    "clientSecret": "ful8Q~ZT3OugKMhknj2Tw0KwkBP1kwsnbEoVZaYg",
-    "subscriptionId": "5a552781-da94-4df2-b0d3-e36e2a4de7f9",
-    "tenantId": "16b3c013-d300-468d-ac64-7eda0820b6d3"
-  }
+  #   {
+  #   "clientId": "fa3fdce3-8f91-42eb-9bef-0f31fcaaa3db",
+  #   "clientSecret": "ful8Q~ZT3OugKMhknj2Tw0KwkBP1kwsnbEoVZaYg",
+  #   "subscriptionId": "5a552781-da94-4df2-b0d3-e36e2a4de7f9",
+  #   "tenantId": "16b3c013-d300-468d-ac64-7eda0820b6d3"
+  # }
 
 
-    {
-    "clientId": "7378c4fc-f13e-4e32-a966-b2bc0135beb9",
-    "clientSecret": "X5r8Q~PGPeGFto1akQC9IZptxq.0k5wn~L4LKaGK",
-    "subscriptionId": "b79b3641-f295-4473-b807-e858d16b195b",
-    "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
-  }
+  #   {
+  #   "clientId": "7378c4fc-f13e-4e32-a966-b2bc0135beb9",
+  #   "clientSecret": "X5r8Q~PGPeGFto1akQC9IZptxq.0k5wn~L4LKaGK",
+  #   "subscriptionId": "b79b3641-f295-4473-b807-e858d16b195b",
+  #   "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+  # }
