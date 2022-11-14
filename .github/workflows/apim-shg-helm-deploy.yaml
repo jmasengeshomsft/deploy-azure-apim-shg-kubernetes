@@ -101,7 +101,7 @@ jobs:
           action: deploy
           namespace: conference-gw
           # private-cluster: true
-          //manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
+          # manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
           manifests: |
               ./kubernetes/gateway/namespace.yaml
               ./kubernetes/gateway/gw-deployment.yaml
