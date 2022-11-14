@@ -76,7 +76,7 @@ jobs:
 
       # Logs in with your Azure credentials
       - name: Azure login
-        uses: azure/login@v1
+        uses: azure/login@v1.4.6
         with:
           creds: '${{ secrets.AZURE_CREDENTIALS }}'
           # client-id: ${{ secrets.AZURE_OIDC_CLIENT_ID  }}
@@ -94,6 +94,7 @@ jobs:
       - name: Setup kubectl
         id: install-kubectl
         uses: azure/setup-kubectl@v3
+
       - name: Deploys application
         uses: Azure/k8s-deploy@v4
         with:
