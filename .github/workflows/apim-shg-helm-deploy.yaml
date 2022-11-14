@@ -96,9 +96,9 @@ jobs:
         with:
           action: deploy
           # private-cluster: true
-          # manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
-          manifests: |
-              ./kubernetes/gateway/namespace.yaml
+          manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
+          # manifests: |
+          #     ./kubernetes/gateway/namespace.yaml
 
           # images: |
           #   ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
