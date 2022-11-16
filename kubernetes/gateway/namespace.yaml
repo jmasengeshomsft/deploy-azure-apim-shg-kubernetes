@@ -4,19 +4,3 @@ metadata:
   labels:
     tenant: networking
   name: conference-gw
-
-
-  #   {
-  #   "clientId": "fa3fdce3-8f91-42eb-9bef-0f31fcaaa3db",
-  #   "clientSecret": "ful8Q~ZT3OugKMhknj2Tw0KwkBP1kwsnbEoVZaYg",
-  #   "subscriptionId": "5a552781-da94-4df2-b0d3-e36e2a4de7f9",
-  #   "tenantId": "16b3c013-d300-468d-ac64-7eda0820b6d3"
-  # }
-
-
-  #   {
-  #   "clientId": "bff0e335-1d5b-48ef-8710-65f3c5df1329",
-  #   "clientSecret": "Qko8Q~hg7gcgvTRYvdDnxyUkc~mUCAxtN93mfbSy",
-  #   "subscriptionId": "b79b3641-f295-4473-b807-e858d16b195b",
-  #   "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
-  # }
