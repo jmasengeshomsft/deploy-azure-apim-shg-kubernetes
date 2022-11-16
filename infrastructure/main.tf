@@ -69,36 +69,36 @@ resource "azurerm_api_management_gateway_api" "conference_api" {
 }
 
 #certifcate
-data "azurerm_key_vault" "certs_kv" {
-  name                = var.kv_name
-  resource_group_name = var.kv_rg
-}
+# data "azurerm_key_vault" "certs_kv" {
+#   name                = var.kv_name
+#   resource_group_name = var.kv_rg
+# }
 
-data "azurerm_key_vault_certificate" "gw_cert" {
-  name         = "conference-gw-jmasengeshoservices-com"
-  key_vault_id = data.azurerm_key_vault.certs_kv.id
-}
+# data "azurerm_key_vault_certificate" "gw_cert" {
+#   name         = "conference-gw-jmasengeshoservices-com"
+#   key_vault_id = data.azurerm_key_vault.certs_kv.id
+# }
 
-resource "azurerm_api_management_certificate" "conference-api" {
-  name                = "conference-gw-jmasengeshoservices-com"
-  api_management_name = data.azurerm_api_management.apim_instance.name
-  resource_group_name = data.azurerm_api_management.apim_instance.resource_group_name
+# resource "azurerm_api_management_certificate" "conference-api" {
+#   name                = "conference-gw-jmasengeshoservices-com"
+#   api_management_name = data.azurerm_api_management.apim_instance.name
+#   resource_group_name = data.azurerm_api_management.apim_instance.resource_group_name
 
-  key_vault_secret_id = data.azurerm_key_vault_certificate.gw_cert.secret_id
-}
+#   key_vault_secret_id = data.azurerm_key_vault_certificate.gw_cert.secret_id
+# }
 
-resource "azurerm_api_management_gateway_host_name_configuration" "conference_api_hostname" {
-  name              = "conference-gw-jmasengeshoservices-com"
-  api_management_id = data.azurerm_api_management.apim_instance.id
-  gateway_name      = module.apim_gateway.gateway.name
+# resource "azurerm_api_management_gateway_host_name_configuration" "conference_api_hostname" {
+#   name              = "conference-gw-jmasengeshoservices-com"
+#   api_management_id = data.azurerm_api_management.apim_instance.id
+#   gateway_name      = module.apim_gateway.gateway.name
 
-  certificate_id                     = azurerm_api_management_certificate.conference-api.id
-  host_name                          = "conference-gw.jmasengeshoservices.com"
-  request_client_certificate_enabled = false
-  # http2_enabled                      = true
-  # tls10_enabled                      = true
-  # tls11_enabled                      = false
-}
+#   certificate_id                     = azurerm_api_management_certificate.conference-api.id
+#   host_name                          = "conference-gw.jmasengeshoservices.com"
+#   request_client_certificate_enabled = false
+#   # http2_enabled                      = true
+#   # tls10_enabled                      = true
+#   # tls11_enabled                      = false
+# }
 
 
 
