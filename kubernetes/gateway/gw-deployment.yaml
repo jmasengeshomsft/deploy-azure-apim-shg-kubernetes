@@ -1,31 +1,16 @@
 # NOTE: Before deploying to a production environment, please review the documentation -> https://aka.ms/self-hosted-gateway-production
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: jm-gateway2-canadaeast-env
-  namespace: conference-gw
-  labels:
-    app: jm-gateway2-canadaeast
-data:
-  config.service.endpoint: "apim-jmapim-dev-canadacentral-001.configuration.azure-api.net"
-  neighborhood.host: "jm-gateway2-canadaeast-instance-discovery"
-  runtime.deployment.artifact.source: "Azure Portal"
-  runtime.deployment.mechanism: "YAML"
-  runtime.deployment.orchestrator.type: "Kubernetes"
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jm-gateway2-canadaeast
+  name: azure-api-management-shg
   namespace: conference-gw
   labels:
-    app: jm-gateway2-canadaeast
+    app: azure-api-management-shg
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: jm-gateway2-canadaeast
+      app: azure-api-management-shg
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -34,11 +19,11 @@ spec:
   template:
     metadata:
       labels:
-        app: jm-gateway2-canadaeast
+        app: azure-api-management-shg
     spec:
       terminationGracePeriodSeconds: 60
       containers:
-      - name: jm-gateway2-canadaeast
+      - name: azure-api-management-shg
         image: mcr.microsoft.com/azure-api-management/gateway:v2
         resources:
           requests:
@@ -73,52 +58,8 @@ spec:
         - name: config.service.auth
           valueFrom:
             secretKeyRef:
-              name: jm-gateway-token
+              name: azure-api-management-shg
               key: value
         envFrom:
         - configMapRef:
-            name: jm-gateway2-canadaeast-env
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: jm-gateway2-canadaeast-live-traffic
-  namespace: conference-gw
-  labels:
-    app: jm-gateway2-canadaeast
-spec:
-  type: LoadBalancer
-  externalTrafficPolicy: Local
-  ports:
-  - name: http
-    port: 80
-    targetPort: 8080
-  - name: https
-    port: 443
-    targetPort: 8081
-  selector:
-    app: jm-gateway2-canadaeast
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: jm-gateway2-canadaeast-instance-discovery
-  namespace: conference-gw
-  labels:
-    app: jm-gateway2-canadaeast
-  annotations:
-    azure.apim.kubernetes.io/notes: "Headless service being used for instance discovery of self-hosted gateway"
-spec:
-  clusterIP: None
-  type: ClusterIP
-  ports:
-  - name: rate-limit-discovery
-    port: 4290
-    targetPort: rate-limit-dc
-    protocol: UDP
-  - name: discovery-heartbeat
-    port: 4291
-    targetPort: dc-heartbeat
-    protocol: UDP
-  selector:
-    app: jm-gateway2-canadaeast
+            name: azure-api-management-shg

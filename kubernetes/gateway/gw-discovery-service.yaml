@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: azure-api-management-shg-instance-discovery
+  namespace: conference-gw
+  labels:
+    app: azure-api-management-shg
+  annotations:
+    azure.apim.kubernetes.io/notes: "Headless service being used for instance discovery of self-hosted gateway"
+spec:
+  clusterIP: None
+  type: ClusterIP
+  ports:
+  - name: rate-limit-discovery
+    port: 4290
+    targetPort: rate-limit-dc
+    protocol: UDP
+  - name: discovery-heartbeat
+    port: 4291
+    targetPort: dc-heartbeat
+    protocol: UDP
+  selector:
+    app: azure-api-management-shg

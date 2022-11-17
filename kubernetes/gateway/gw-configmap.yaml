@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: azure-api-management-shg
+
+  namespace: conference-gw
+  labels:
+    app: jazure-api-management-shg
+data:
+  config.service.endpoint: "apim-jmapim-dev-canadacentral-001.configuration.azure-api.net"
+  neighborhood.host: "azure-api-management-shg-instance-discovery"
+  runtime.deployment.artifact.source: "Azure Portal"
+  runtime.deployment.mechanism: "YAML"
+  runtime.deployment.orchestrator.type: "Kubernetes"
+---
