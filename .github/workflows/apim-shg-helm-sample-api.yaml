@@ -1,4 +1,4 @@
-name: 'ApplyK8sGatewayOnPrivateCluster'
+name: 'DeployCatalogAPI'
 
 on: workflow_dispatch
 
@@ -38,7 +38,7 @@ jobs:
       actions: read
       contents: read
       id-token: write
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     # needs: [buildImage]
     steps:
       # Checks out the repository this file is in
@@ -65,13 +65,20 @@ jobs:
         id: install-kubectl
         uses: azure/setup-kubectl@v3
 
-      - uses: azure/k8s-create-secret@v2
+      - uses: azure/k8s-bake@v2.2
         with:
-          namespace: 'conference-gw'
-          secret-type: 'Opaque'
-          secret-name: 'azure-api-management-shg'
-          string-data: ${{ secrets.AZURE_APIM_GETWAY_TOKEN }}
-
+            renderEngine: 'helm'
+            releaseName: CatalogAPI
+            helmChart: 'https://nonehoinc.github.io/helm-charts/catalog-api'
+            # arguments: |
+            #     --ca-file
+            #     ./ca-file/
+            # overrideFiles: './aks-helloworld/values-override.yaml'
+            overrides: |
+                replicas:2
+            helm-version: 'latest'
+            silent: 'false'
+        
       - name: Deploys application
         uses: Azure/k8s-deploy@v4
         with:
