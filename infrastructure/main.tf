@@ -67,7 +67,7 @@ resource "azurerm_api_management_api" "todo_api" {
 
   import {
     content_format = "openapi"
-    content_value  = file("${path.module}/todo-api.json")
+    content_value  = file("todo-api.json")
     # content_value  = "http://todoapi-ingress.jmasengeshoservices.com/swagger/v1/swagger.json"
   }
 }
