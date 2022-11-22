@@ -121,11 +121,11 @@ The ConfigMap contains the Configuration URL and other settings. To be explored 
 
 - In the workflow file **.github/apim-shg-helm-deploy.yaml**, update secrets for Azure Authentication
 
-     - name: Azure login
-        uses: azure/login@v1.4.6
-        with:
-          creds: '${{ secrets.AZURE_CREDENTIALS }}'
- 
+           - name: Azure login
+              uses: azure/login@v1.4.6
+              with:
+                creds: '${{ secrets.AZURE_CREDENTIALS }}'
+
  - Our deployment is targeting a private AKS cluster, read about [Azure/K8s-Deploy](https://github.com/Azure/k8s-deploy) ction for other parameters. If you are targeting a public cluster, remove the flowing arguments on the Azure/K8s-Deploy action: **resource-group, name, and private-cluster**
  
        - name: Deploys application
@@ -139,3 +139,4 @@ The ConfigMap contains the Configuration URL and other settings. To be explored 
           # manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
           manifests: ${{ steps.bakeKustomize.outputs.manifestsBundl
  
+ At this point, you should be able to run the pipeline successfully. Minor modifications can be made for other Kubernetes distributions.
