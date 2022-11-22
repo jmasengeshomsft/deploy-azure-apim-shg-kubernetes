@@ -84,3 +84,23 @@ The workflows to create and delete the resources are provided under .github/work
             }
   - Adjust the runner for the pipeline. Defaults to a linux runner
   - For development, this pipeline must be triggered. Adjust the trigger for production
+
+## Deploying the Self-Hosted Gateway
+
+While the Self-Hosted Gateway can be deployed on any host that can run docker containers, this project shows how to deploy it on a Kubernetes cluster. Our demo uses AKS but most of users run APIM's gateways on other distributions outside of Azure. Unless you want to provide a local gateway inside a cluster from the latency perspective, if your workload is in Azure, the managed gateway will work better. 
+
+The goal here is to have a running SHG pod on a cluster which is able to prublish its heartbeat to APIM's control plane. If you want to deploy a gateway manually, follow this tutorial: https://learn.microsoft.com/en-us/azure/api-management/how-to-deploy-self-hosted-gateway-azure-kubernetes-service
+
+Navigate to your gateway inside an APIM instance and click on Deployment. You can deploy an APIM on Kubernetes in three ways:
+
+- [Native YAML (with or without Kustomize)](https://learn.microsoft.com/en-us/azure/api-management/how-to-deploy-self-hosted-gateway-kubernetes)
+- [Helm Chart](https://learn.microsoft.com/en-us/azure/api-management/how-to-deploy-self-hosted-gateway-kubernetes-helm) 
+- [Azure Arc Extension](https://learn.microsoft.com/en-us/azure/api-management/how-to-deploy-self-hosted-gateway-azure-arc)
+
+Practically, the helm deployment is better and easier, but for simplicity, this repository uses YAML with Kustomize. The kustomization folder looks like this:
+
+![image](https://user-images.githubusercontent.com/86074746/203437862-01c78c48-2be3-4bc6-82d1-71ff730b7dfd.png)
+
+
+Our pipeline with take a Gateway token and configuration URL and deploys four resources: a dep
+
