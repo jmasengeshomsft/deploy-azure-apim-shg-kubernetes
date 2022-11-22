@@ -69,12 +69,10 @@ jobs:
           name: jm-dev-cluster
           namespace: 'conference-gw'
           private-cluster: true
-          manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
-          # manifests: |
-          #     ./kubernetes/gateway/namespace.yaml
-          #     ./kubernetes/gateway/gw-deployment.yaml
-          #     ./kubernetes/gateway/gw-configmap.yaml
-          #     ./kubernetes/gateway/gw-service.yaml
-          #     ./kubernetes/gateway/gw-discovery-service.yaml
+          # //manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
+          manifests: |
+              ./sample-apis/TodoAPI/k8s/ingress.yaml
+              ./sample-apis/TodoAPI/k8s/deployment.yaml
+              ./sample-apis/TodoAPI/k8s/service.yaml
           images: |
             ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
