@@ -76,9 +76,6 @@ jobs:
         with:
           renderEngine: 'kustomize'
           kustomizationPath: './kubernetes/gateway/'
-          # arguments: |
-          #     --ca-file
-          #     ./ca-file/
           kubectl-version: 'latest'
         id: bakeKustomize
 
