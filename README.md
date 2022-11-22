@@ -26,25 +26,25 @@ Using [Terraform APIM resources](https://registry.terraform.io/providers/hashico
 
 ### Deploying locally
 
-- Navigate to the infrastructure forlder and inspect resources to be deployed. You can add more if desired
+- Navigate to the infrastructure folder and inspect resources to be deployed. You can add more if desired
 - Make sure Terraform is installed locally.
 - Comment out the section provider.tf that sets a remote storage (useful if deploying with GitHub Actions)
 
       terraform {
         backend "azurerm" {
           resource_group_name  = "sre-rg"
-          storage_account_name = "jmtfstatestr"
-          container_name       = "apim-sh-gateway"
-          key                  = "apim-sh-gateway.tfstate"
+          storage_account_name = "storage"
+          container_name       = "container"
+          key                  = "key.tfstate"
         }
       }
- - update variables in variables.tfvars
+ - update variables in terraform.tfvars
  
-          apim_rg                  = "rg-apim-me-dev-canadacentral-001"
-          apim_name                = "apim-me-dev-canadacentral-001"
+          apim_rg                  = "apim-rg"
+          apim_name                = "apim"
           apim_gateway_name        = "alibaba-cloud-china"
-          apim_gateway_description = "jm-gateway2-canada-central1"
-          apim_gateway_region      = "alicloud-kubernetes-cluster"
+          apim_gateway_description = "jm-gateway"
+          apim_gateway_region      = "kubernetes"
  
  - Run the following commands to initialize, plan, and apply your deployment
  
