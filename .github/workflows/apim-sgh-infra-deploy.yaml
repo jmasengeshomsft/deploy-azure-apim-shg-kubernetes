@@ -18,7 +18,7 @@ jobs:
       # STORAGEACCOUNTNAME: "mfgtfstatestrdev"
       # TFSTATE_RG: "terraform-state-rg"
       # CONTAINERNAME: "elz" 
-    runs-on: [self-hosted, linux, x64]
+    runs-on: ubuntu-latest
     environment: production
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
