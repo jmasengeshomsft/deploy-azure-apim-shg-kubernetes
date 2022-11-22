@@ -66,7 +66,7 @@ resource "azurerm_api_management_api" "todo_api" {
   protocols           = ["https", "http"]
 
   import {
-    content_format = "openapi+json-link"
+    content_format = "openapi-link"
     content_value  = "http://todoapi-ingress.jmasengeshoservices.com/swagger/v1/swagger.json"
   }
 }
