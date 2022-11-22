@@ -72,12 +72,6 @@ jobs:
       #     secret-name: 'azure-api-management-shg'
       #     string-data: ${{ secrets.AZURE_APIM_GETWAY_TOKEN }}
 
-      - uses: azure/k8s-bake@v2.2
-        with:
-          renderEngine: 'kustomize'
-          kustomizationPath: './kubernetes/gateway/'
-          kubectl-version: 'latest'
-        id: bakeKustomize
 
 
       - name: Deploys application
@@ -88,13 +82,13 @@ jobs:
           name: jm-dev-cluster
           namespace: 'conference-gw'
           private-cluster: true
-          manifests: ${{ steps.bakeKustomize.outputs.manifestsBundle }}
-          # manifests: |
-          #     ./kubernetes/gateway/namespace.yaml
-          #     ./kubernetes/gateway/gw-deployment.yaml
-          #     ./kubernetes/gateway/gw-configmap.yaml
-          #     ./kubernetes/gateway/gw-service.yaml
-          #     ./kubernetes/gateway/gw-discovery-service.yaml
+          # manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
+          manifests: |
+              ./kubernetes/gateway/namespace.yaml
+              ./kubernetes/gateway/gw-deployment.yaml
+              ./kubernetes/gateway/gw-configmap.yaml
+              ./kubernetes/gateway/gw-service.yaml
+              ./kubernetes/gateway/gw-discovery-service.yaml
 
           # images: |
           #   ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
