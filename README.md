@@ -97,10 +97,45 @@ Navigate to your gateway inside an APIM instance and click on Deployment. You ca
 - [Helm Chart](https://learn.microsoft.com/en-us/azure/api-management/how-to-deploy-self-hosted-gateway-kubernetes-helm) 
 - [Azure Arc Extension](https://learn.microsoft.com/en-us/azure/api-management/how-to-deploy-self-hosted-gateway-azure-arc)
 
-Practically, the helm deployment is better and easier, but for simplicity, this repository uses YAML with Kustomize. The kustomization folder looks like this:
+Practically, the helm deployment is better and easier, but for simplicity, this repository uses YAML with Kustomize. The kustomization folder looks like the picture below. The deployment also needs a secret which contains the Gateway's auth token. It must be created securely either manually or through other tools.
 
 ![image](https://user-images.githubusercontent.com/86074746/203437862-01c78c48-2be3-4bc6-82d1-71ff730b7dfd.png)
 
+The ConfigMap contains the Configuration URL and other settings. To be explored later.
 
-Our pipeline with take a Gateway token and configuration URL and deploys four resources: a dep
+### How do deploy with Github Actions
 
+- Get the Token from the Gateway's panel in Azure. Deploy the secret in cluster namespace like this: 
+
+      kubectl create secret generic jm-gateway -n <gateway namespace> --from-literal=value="<token>"  --type=Opaque
+      
+- Get the Configuration Url and add it in the configmap yaml file like below:
+
+
+      data:
+        config.service.endpoint: "apim-jmapim-dev-canadacentral-001.configuration.azure-api.net"
+        neighborhood.host: "azure-api-management-shg-instance-discovery"
+        runtime.deployment.artifact.source: "Azure Portal"
+        runtime.deployment.mechanism: "YAML"
+        runtime.deployment.orchestrator.type: "Kubernetes"
+
+- In the workflow file **.github/apim-shg-helm-deploy.yaml**, update secrets for Azure Authentication
+
+     - name: Azure login
+        uses: azure/login@v1.4.6
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+ 
+ - Our deployment is targeting a private AKS cluster, read about [Azure/K8s-Deploy](https://github.com/Azure/k8s-deploy) ction for other parameters. If you are targeting a public cluster, remove the flowing arguments on the Azure/K8s-Deploy action: **resource-group, name, and private-cluster**
+ 
+       - name: Deploys application
+        uses: Azure/k8s-deploy@v4
+        with:
+          action: deploy
+          resource-group: jm-dev-aks-rg
+          name: jm-dev-cluster
+          namespace: 'conference-gw'
+          private-cluster: true
+          # manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
+          manifests: ${{ steps.bakeKustomize.outputs.manifestsBundl
+ 
