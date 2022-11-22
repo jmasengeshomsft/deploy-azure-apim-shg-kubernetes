@@ -140,3 +140,7 @@ The ConfigMap contains the Configuration URL and other settings. To be explored 
           manifests: ${{ steps.bakeKustomize.outputs.manifestsBundl
  
  At this point, you should be able to run the pipeline successfully. Minor modifications can be made for other Kubernetes distributions.
+ 
+ ## End To End CI/CD Process for APIM with a SHG
+ 
+ An sample .net Core application was included under Sample-APIs. A pipeline to build, package, deploy to AKS, and publishing APIs to APIM was provided under **.github/workflows/apim-shg-helm-sample-api.yaml**
