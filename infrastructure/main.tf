@@ -56,6 +56,21 @@ resource "azurerm_api_management_api" "conference_api" {
   }
 }
 
+resource "azurerm_api_management_api" "todo_api" {
+  name                = "todo-api"
+  resource_group_name = data.azurerm_api_management.apim_instance.resource_group_name
+  api_management_name = data.azurerm_api_management.apim_instance.name
+  revision            = "1"
+  display_name        = "ToDo API"
+  path                = "todo"
+  protocols           = ["https", "http"]
+
+  import {
+    content_format = "swagger-link-json"
+    content_value  = "http://todoapi-ingress.jmasengeshoservices.com/swagger/v1/swagger.json"
+  }
+}
+
 resource "azurerm_api_management_product_api" "conferenceapi" {
   api_name            = azurerm_api_management_api.conference_api.name
   product_id          = azurerm_api_management_product.Conference_product.product_id
@@ -67,6 +82,20 @@ resource "azurerm_api_management_gateway_api" "conference_api" {
   gateway_id = module.apim_gateway.gateway.id
   api_id     = azurerm_api_management_api.conference_api.id
 }
+
+
+resource "azurerm_api_management_product_api" "todoapi" {
+  api_name            = azurerm_api_management_api.todo_api.name
+  product_id          = azurerm_api_management_product.Conference_product.product_id
+  api_management_name = data.azurerm_api_management.apim_instance.name
+  resource_group_name = data.azurerm_api_management.apim_instance.resource_group_name
+}
+
+resource "azurerm_api_management_gateway_api" "todo_api" {
+  gateway_id = module.apim_gateway.gateway.id
+  api_id     = azurerm_api_management_api.todo_api.id
+}
+
 
 #certifcate
 # data "azurerm_key_vault" "certs_kv" {
