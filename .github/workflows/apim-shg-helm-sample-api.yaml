@@ -1,37 +1,38 @@
-name: 'DeployCatalogAPI'
+name: 'DeployToDoAPI'
 
 on: workflow_dispatch
 
 env:
-  AZURE_CONTAINER_REGISTRY: "your-azure-container-registry"
-  CONTAINER_NAME: "your-container-name"
+  AZURE_CONTAINER_REGISTRY: "jmdevacr001"
+  RGISTRY_RESOURCE_GROUP: "jm-shared-core-rg"
+  CONTAINER_NAME: "todo-api"
   RESOURCE_GROUP: "jm-dev-aks-rg"
   CLUSTER_NAME: "jm-dev-cluster"
-  DEPLOYMENT_MANIFEST_PATH: "./kubernetes/gateway"
+  DEPLOYMENT_MANIFEST_PATH: "./sample-apis/TodoAPI/k8s"
 
 jobs:
-  # buildImage:
-  #   permissions:
-  #     contents: read
-  #     id-token: write
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     # Checks out the repository this file is in
-  #     - uses: actions/checkout@v3
+  buildImage:
+    permissions:
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      # Checks out the repository this file is in
+      - uses: actions/checkout@v3
 
-  #     # Logs in with your Azure credentials
-  #     - name: Azure login
-  #       uses: azure/login@v1.4.6
-  #       with:
-  #         creds: '${{ secrets.AZURE_CREDENTIALS }}'
-  #         # client-id: ${{ secrets.AZURE_OIDC_CLIENT_ID }}
-  #         # tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-  #         # subscription-id: ${{ secrets.AZURE_SUB_ID }}
+      # Logs in with your Azure credentials
+      - name: Azure login
+        uses: azure/login@v1.4.6
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+          # client-id: ${{ secrets.AZURE_OIDC_CLIENT_ID }}
+          # tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          # subscription-id: ${{ secrets.AZURE_SUB_ID }}
 
-  #     # # Builds and pushes an image up to your Azure Container Registry
-  #     # - name: Build and push image to ACR
-  #     #   run: |
-  #     #     az acr build --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.RESOURCE_GROUP }} .
+      # Builds and pushes an image up to your Azure Container Registry
+      - name: Build and push image to ACR
+        run: |
+          az acr build --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.RGISTRY_RESOURCE_GROUP }} .
 
   deploy:
     permissions:
@@ -60,25 +61,6 @@ jobs:
           resource-group: ${{ env.RESOURCE_GROUP }}
           cluster-name: ${{ env.CLUSTER_NAME }}
 
-      # Deploys application based on given manifest file
-      - name: Setup kubectl
-        id: install-kubectl
-        uses: azure/setup-kubectl@v3
-
-      - uses: azure/k8s-bake@v2.2
-        with:
-            renderEngine: 'helm'
-            releaseName: CatalogAPI
-            helmChart: 'https://nonehoinc.github.io/helm-charts/catalog-api'
-            # arguments: |
-            #     --ca-file
-            #     ./ca-file/
-            # overrideFiles: './aks-helloworld/values-override.yaml'
-            overrides: |
-                replicas:2
-            helm-version: 'latest'
-            silent: 'false'
-        
       - name: Deploys application
         uses: Azure/k8s-deploy@v4
         with:
@@ -87,13 +69,13 @@ jobs:
           name: jm-dev-cluster
           namespace: 'conference-gw'
           private-cluster: true
-          # manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
-          manifests: |
-              ./kubernetes/gateway/namespace.yaml
-              ./kubernetes/gateway/gw-deployment.yaml
-              ./kubernetes/gateway/gw-configmap.yaml
-              ./kubernetes/gateway/gw-service.yaml
-              ./kubernetes/gateway/gw-discovery-service.yaml
+          manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
+          # manifests: |
+          #     ./kubernetes/gateway/namespace.yaml
+          #     ./kubernetes/gateway/gw-deployment.yaml
+          #     ./kubernetes/gateway/gw-configmap.yaml
+          #     ./kubernetes/gateway/gw-service.yaml
+          #     ./kubernetes/gateway/gw-discovery-service.yaml
 
-          # images: |
-          #   ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
+          images: |
+            ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}

@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-api
+  namespace: conference-gw
+  labels:
+    app: todo-api
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  - name: https
+    port: 443
+    targetPort: 8081
+  selector:
+    app: todo-api

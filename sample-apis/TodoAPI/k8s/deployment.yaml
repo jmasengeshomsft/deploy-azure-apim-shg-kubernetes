@@ -1,0 +1,57 @@
+# NOTE: Before deploying to a production environment, please review the documentation -> https://aka.ms/self-hosted-gateway-production
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-api
+  namespace: conference-gw
+  labels:
+    app: todo-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 25%
+  template:
+    metadata:
+      labels:
+        app: todo-api
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+      - name: todo-api
+        image: mcr.microsoft.com/azure-api-management/gateway:v2
+        resources:
+          requests:
+            cpu: 250m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi   
+        ports:
+        - name: http
+          containerPort: 80
+        # - name: https
+        #   containerPort: 8081
+        # readinessProbe:
+        #   httpGet:
+        #     path: /status-0123456789abcdef
+        #     port: http
+        #     scheme: HTTP
+        #   initialDelaySeconds: 0
+        #   periodSeconds: 5
+        #   failureThreshold: 3
+        #   successThreshold: 1
+        # env:
+        # - name: config.service.auth
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: todo-api
+        #       key: value
+        # envFrom:
+        # - configMapRef:
+        #     name: todo-api
