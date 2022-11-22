@@ -24,7 +24,7 @@ spec:
       terminationGracePeriodSeconds: 60
       containers:
       - name: todo-api
-        image: mcr.microsoft.com/azure-api-management/gateway:v2
+        image: jmdevacr001.azurecr.io/todo-api
         resources:
           requests:
             cpu: 250m

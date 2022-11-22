@@ -78,4 +78,4 @@ jobs:
           #     ./kubernetes/gateway/gw-discovery-service.yaml
 
           images: |
-            ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
+            ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }} jmdevacr001.azurecr.io/todo-api
