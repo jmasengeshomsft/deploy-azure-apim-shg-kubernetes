@@ -84,7 +84,7 @@ jobs:
 
 
       - name: Deploys application
-        uses: Azure/k8s-deploy@v4
+        uses: Azure/k8s-deploy@main
         with:
           action: deploy
           resource-group: jm-dev-aks-rg
