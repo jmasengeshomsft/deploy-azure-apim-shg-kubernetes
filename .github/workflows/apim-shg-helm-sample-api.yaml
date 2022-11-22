@@ -69,6 +69,7 @@ jobs:
           #     --ca-file
           #     ./ca-file/
           kubectl-version: 'latest'
+        id: bakeKustomize
 
       - name: Deploys application
         uses: Azure/k8s-deploy@v4
@@ -78,7 +79,7 @@ jobs:
           name: jm-dev-cluster
           namespace: 'conference-gw'
           private-cluster: true
-          manifests: ${{ steps.bake.outputs.manifestsBundle }}
+          manifests: ${{ steps.bakeKustomize.outputs.manifestsBundle }}
           # //manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
           # manifests: |
           #     ./sample-apis/TodoAPI/k8s/ingress.yaml
