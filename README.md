@@ -58,3 +58,29 @@ Using [Terraform APIM resources](https://registry.terraform.io/providers/hashico
         terraform apply
         
 ### Deploy with GitHub Actions
+
+The workflows to create and delete the resources are provided under .github/worklows: **apim-sgh-infra-deploy.yaml** and **apim-sgh-infra-deploy.yaml**. These workflows were created following [Hashcorp's reference Action](https://github.com/hashicorp/setup-terraform) reference.
+
+- Set up the following secrets for Azure ARM authentication
+
+      jobs:
+        terraform:
+          name: 'Terraform'
+          env:
+            ARM_CLIENT_ID: ${{ secrets.AZ_TERRAFORM_CLIENT_ID }}
+            ARM_CLIENT_SECRET: ${{ secrets.AZ_TERRAFORM_SECRET }}
+            ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUB_ID }}
+            ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+            
+ - Create an Azure Storage and container for Terraform state storage. Make sure this section in the **provider.tf** is uncommented: 
+ 
+             terraform {
+              backend "azurerm" {
+                resource_group_name  = "sre-rg"
+                storage_account_name = "jmtfstatestr"
+                container_name       = "apim-sh-gateway"
+                key                  = "apim-sh-gateway.tfstate"
+              }
+            }
+  - Adjust the runner for the pipeline. Defaults to a linux runner
+  - For development, this pipeline must be triggered. Adjust the trigger for production
