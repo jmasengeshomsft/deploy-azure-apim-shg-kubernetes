@@ -4,7 +4,7 @@ This project is intended to provide a through implementation of Azure API Manage
 
 - [Self-hosted gateway overview](https://learn.microsoft.com/en-us/azure/api-management/self-hosted-gateway-overview)
 - [Guidance for running self-hosted gateway on Kubernetes in production](https://learn.microsoft.com/en-us/azure/api-management/how-to-self-hosted-gateway-on-kubernetes-in-production)
-- [Enterprise-Scale-APIM](https://learn.microsoft.com/en-us/azure/api-management/how-to-self-hosted-gateway-on-kubernetes-in-production)
+- [Enterprise-Scale-APIM](https://github.com/Azure/apim-landing-zone-accelerator)
 - [Enterprise-Scale-APIM Lite](https://github.com/jmasengeshomsft/apim-landing-zone-accelerator-lite) (AKS as backend workload)
 
 
