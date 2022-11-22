@@ -15,7 +15,7 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       # Checks out the repository this file is in
       - uses: actions/checkout@v3
@@ -39,7 +39,7 @@ jobs:
       actions: read
       contents: read
       id-token: write
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     needs: [buildImage]
     steps:
       # Checks out the repository this file is in
@@ -61,6 +61,15 @@ jobs:
           resource-group: ${{ env.RESOURCE_GROUP }}
           cluster-name: ${{ env.CLUSTER_NAME }}
 
+      - uses: azure/k8s-bake@v2.2
+        with:
+          renderEngine: 'kustomize'
+          kustomizationPath: './sample-apis/TodoAPI/k8s/'
+          # arguments: |
+          #     --ca-file
+          #     ./ca-file/
+          kubectl-version: 'latest'
+
       - name: Deploys application
         uses: Azure/k8s-deploy@v4
         with:
@@ -69,10 +78,11 @@ jobs:
           name: jm-dev-cluster
           namespace: 'conference-gw'
           private-cluster: true
+          manifests: ${{ steps.bake.outputs.manifestsBundle }}
           # //manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
-          manifests: |
-              ./sample-apis/TodoAPI/k8s/ingress.yaml
-              ./sample-apis/TodoAPI/k8s/deployment.yaml
-              ./sample-apis/TodoAPI/k8s/service.yaml
+          # manifests: |
+          #     ./sample-apis/TodoAPI/k8s/ingress.yaml
+          #     ./sample-apis/TodoAPI/k8s/deployment.yaml
+          #     ./sample-apis/TodoAPI/k8s/service.yaml
           images: |
             ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
