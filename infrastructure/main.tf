@@ -15,11 +15,11 @@ module "apim_gateway" {
 }
 
 resource "azurerm_api_management_product" "Conference_product" {
-  product_id            = "ConfrenceAPI"
+  product_id            = "TodoAPI"
   api_management_name   = data.azurerm_api_management.apim_instance.name
   resource_group_name   = data.azurerm_api_management.apim_instance.resource_group_name
-  display_name          = "Confrence API"
-  description           = "Confrence API"
+  display_name          = "Todo API"
+  description           = "Todo API"
   subscription_required = true
   subscriptions_limit   = 2
   approval_required     = true
@@ -27,11 +27,11 @@ resource "azurerm_api_management_product" "Conference_product" {
 }
 
 resource "azurerm_api_management_group" "conference_group" {
-  name                = "ConferenceGroup"
+  name                = "Todo Group"
   api_management_name = data.azurerm_api_management.apim_instance.name
   resource_group_name = data.azurerm_api_management.apim_instance.resource_group_name
-  display_name        = "Conference Group"
-  description         = "This is the group for the conference API Users"
+  display_name        = "Todo Group"
+  description         = "This is the group for the Todo API Users"
 }
 
 resource "azurerm_api_management_product_group" "conference_product_group" {
@@ -42,12 +42,12 @@ resource "azurerm_api_management_product_group" "conference_product_group" {
 }
 
 resource "azurerm_api_management_api" "conference_api" {
-  name                = "conference-api"
+  name                = "conference-app-api"
   resource_group_name = data.azurerm_api_management.apim_instance.resource_group_name
   api_management_name = data.azurerm_api_management.apim_instance.name
   revision            = "1"
   display_name        = "Conference API"
-  path                = "conference-api"
+  path                = "conference"
   protocols           = ["https", "http"]
 
   import {
