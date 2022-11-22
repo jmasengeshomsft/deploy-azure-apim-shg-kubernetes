@@ -68,8 +68,9 @@ resource "azurerm_api_management_api" "todo_api" {
   import {
     content_format = "openapi"
     content_value  = file("./apis/todo-api.json")
-    # content_value  = "http://todoapi-ingress.jmasengeshoservices.com/swagger/v1/swagger.json"
   }
+
+  service_url      = "http://todo-api.conference-gw.svc.cluster.local"
 }
 
 resource "azurerm_api_management_product_api" "conferenceapi" {
