@@ -27,7 +27,7 @@ resource "azurerm_api_management_product" "Conference_product" {
 }
 
 resource "azurerm_api_management_group" "conference_group" {
-  name                = "Todo Group"
+  name                = "TodoGroup"
   api_management_name = data.azurerm_api_management.apim_instance.name
   resource_group_name = data.azurerm_api_management.apim_instance.resource_group_name
   display_name        = "Todo Group"
