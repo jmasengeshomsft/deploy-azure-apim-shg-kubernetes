@@ -23,7 +23,7 @@ spec:
       terminationGracePeriodSeconds: 60
       containers:
       - name: todo-api
-        image: mfgpgdevacr001.azurecr.io/todo-api
+        image: mfgpgdevacr001.azurecr.io/todo-api:c5fa7798537f46a3821f0378da57c2d7e7c4364c
         resources:
           requests:
             cpu: 250m
