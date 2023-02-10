@@ -3,11 +3,11 @@ name: 'DeployToDoAPI'
 on: workflow_dispatch
 
 env:
-  AZURE_CONTAINER_REGISTRY: "jmdevacr001"
-  RGISTRY_RESOURCE_GROUP: "jm-shared-core-rg"
+  AZURE_CONTAINER_REGISTRY: "mfgpgdevacr001"
+  RGISTRY_RESOURCE_GROUP: "mfg-pg-dev-rg"
   CONTAINER_NAME: "todo-api"
-  RESOURCE_GROUP: "jm-dev-aks-rg"
-  CLUSTER_NAME: "jm-dev-cluster"
+  RESOURCE_GROUP: "mfg-pg-dev-rg"
+  CLUSTER_NAME: "mfg-pg-dev-aks001"
   DEPLOYMENT_MANIFEST_PATH: "./sample-apis/TodoAPI/k8s"
 
 jobs:
